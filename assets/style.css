@@ -1,0 +1,24 @@
+
+
+.jumbotron{
+    background-image: url("../images/trainbb.jpg");
+    height: 400px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid black;
+    margin-top: 10px;
+    color: #dc3545;
+    
+}
+
+
+.container-fluid {
+    font-weight: bold;
+  }
+
+.fa-train {
+  color:  #dc3545;
+
+}
+
+
