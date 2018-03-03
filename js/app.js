@@ -46,8 +46,6 @@ $("#add-train").on("click", function () {
         destination: destination,
         firstTrainTime: firstTrainTime,
         frequency: frequency,
-        minutesAway: minutesAway,
-        nextArrival: nextArrival,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
     });
     alert("Add Train Submitted!");
@@ -80,27 +78,28 @@ database.ref().orderByChild("dateAdded").limitToLast(15).on("child_added", funct
   console.log(frequency);
 
 //Train start
-var firstTimeConverted = moment(firstTrainTime, "hh:mm").subtract(1, "years");
-
+var firstTimeConverted = moment(firstTrainTime, "hh:mm").subtract(1, "days");
+console.log(firstTimeConverted);
 
 // Difference between the times
 var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-
+console.log(diffTime);
 
 // Time apart (remainder)
 var tRemainder = diffTime % frequency;
-
+console.log(tRemainder);
 
 // Minute Until Train
 var minutesAway = frequency - tRemainder;
-
+console.log(minutesAway);
 
 // Next Train
 var nextTrain = moment().add(minutesAway, "minutes");
-
+console.log( nextTrain);
 
 // Arrival time
 var nextArrival = moment(nextTrain).format("hh:mm a");
+console.log(nextArrival);
 
 var nextArrivalUpdate = function() {
   date = moment(new Date())
@@ -118,8 +117,8 @@ var nextArrivalUpdate = function() {
   $("#new-train").prepend("<tr><td>" + trainSnapshot.val().trainName + "</td>" +
     "<td>" + trainSnapshot.val().destination + "</td>" +
     "<td>" + "Every " + trainSnapshot.val().frequency + " mins" + "</td>" +
-    "<td>" + trainSnapshot.val().nextArrival + "</td>" +
-    "<td>" + trainSnapshot.val().minutesAway + " mins until arrival" + "</td>" +
+    "<td>" + nextArrival + "</td>" +
+    "<td>" + minutesAway + " mins until arrival" + "</td>" +
     "</td></tr>");
 
   }, function(errorObject) {
